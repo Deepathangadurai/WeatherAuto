@@ -1,0 +1,55 @@
+﻿# ============================================================================
+# GitHub Actions Workflow: Seoul Weather Email Automation
+# ============================================================================
+# Triggers:
+#   - Daily schedule at 06:00 UTC (11:30 AM IST / 03:00 PM KST)
+#   - Manual execution via "Run workflow" button on GitHub Actions tab
+#
+# Secrets required (add in: Settings > Secrets and variables > Actions):
+#   OPENWEATHER_API_KEY  - Your OpenWeather API key
+#   SMTP_USERNAME        - Gmail address used to send the email
+#   SMTP_PASSWORD        - Gmail App Password (16-char, not your login password)
+#   EMAIL_TO             - Recipient email address
+# ============================================================================
+
+name: Seoul Weather Email Automation
+
+on:
+  schedule:
+    # Runs every day at 06:00 UTC (11:30 AM IST / 03:00 PM KST)
+    - cron: "0 6 * * *"
+
+  # Allow manual trigger from the GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  send-weather-email:
+    name: Fetch Weather & Send Email
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Check out the repository ──────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python 3.10 ────────────────────────────────────────────
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      # ── 3. Install dependencies ───────────────────────────────────────────
+      - name: Install dependencies
+        run: pip install requests PyYAML
+
+      # ── 4. Run the weather automation script ─────────────────────────────
+      #    Credentials are injected from GitHub Secrets as environment
+      #    variables. weather.py reads them via os.environ.get(); if an env
+      #    var is missing the script raises a clear WorkflowError.
+      - name: Run weather automation
+        env:
+          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          SMTP_USERNAME:       ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD:       ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_TO:            ${{ secrets.EMAIL_TO }}
+        run: python weather.py

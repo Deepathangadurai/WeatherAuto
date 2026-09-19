@@ -1,0 +1,17 @@
+workflow:
+  name: Seoul Weather Email Automation
+  version: "1.0"
+
+  weather:
+    provider: openweather
+    endpoint: https://api.openweathermap.org/data/2.5/weather
+
+    location:
+      city: Seoul
+      country_code: KR
+
+    units: metric
+
+  email:
+    provider: gmail_smtp
+    subject: Weather Update - Seoul
