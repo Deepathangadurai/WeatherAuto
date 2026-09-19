@@ -32,10 +32,10 @@ import yaml
 # When running via GitHub Actions, the secrets injected as env vars take over.
 # WARNING: Keep this file private. Do NOT share or commit real credentials publicly.
 
-_LOCAL_API_KEY  = "YOUR_OPENWEATHER_API_KEY"    # <-- fill in for local runs
-_LOCAL_USERNAME = "YOUR_GMAIL_ADDRESS"          # <-- fill in for local runs
-_LOCAL_PASSWORD = "YOUR_GMAIL_APP_PASSWORD"     # <-- fill in for local runs
-_LOCAL_EMAIL_TO = "RECIPIENT_EMAIL_ADDRESS"     # <-- fill in for local runs
+_LOCAL_API_KEY  = "73a14138aeaa4e4c3f84d915fbcf1d64"   # OpenWeather API key
+_LOCAL_USERNAME = "deepathangadurai923@gmail.com"      # Gmail sender address
+_LOCAL_PASSWORD = "yhon lsce gnkc iott"                # Gmail App Password
+_LOCAL_EMAIL_TO = "deepathangadurai923@gmail.com"      # Recipient address
 
 OPENWEATHER_API_KEY = os.environ.get("OPENWEATHER_API_KEY", _LOCAL_API_KEY)
 
